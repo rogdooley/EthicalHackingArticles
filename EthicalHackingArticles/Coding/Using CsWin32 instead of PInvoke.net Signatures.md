@@ -157,11 +157,11 @@ Then copy the output `byte[] buf = new byte[510] {0xfc,0x48,0x83,0xe4,0xf0,0xe8`
 
 On my Kali Linux VM, I start Metasploit console to await the reverse shell.
 
-![][Images/Coding/CsWin32InsteadOfPInvoke/CsWin32-Metasploit.png]
+![](Images/Coding/CsWin32InsteadOfPInvoke/CsWin32-Metasploit.png)
 
 ...and here it is...
 
-![[Images/Coding/CsWin32InsteadOfPInvoke/CsWin32-MetasploitReverseShell-01.png]]
+![](Images/Coding/CsWin32InsteadOfPInvoke/CsWin32-MetasploitReverseShell-01.png)
 
 
 CsWin32 handles the heavy lifting by auto-generating P/Invoke signatures that are always up-to-date. It saves you from manually managing signatures and gives you a streamlined, efficient way to interface between C# and the native Windows APIs.
