@@ -109,7 +109,8 @@ Admittedly, getting CsWin32 installed requires a fair amount of steps.
 
 ![](Images/Coding/CsWin32InsteadOfPInvoke/CsWin32-Tools-NuGet.png)
 
-2. Search for cswin32
+2. Search for CsWin32
+
 ![](Images/Coding/CsWin32InsteadOfPInvoke/CsWin32-NuGet-CsWin32.png)
 
 3. Install...this will also install dependencies which need to be accepted (SDK.Win32Metadata, WDK.Metadata, and SDK.Win32Docs)
