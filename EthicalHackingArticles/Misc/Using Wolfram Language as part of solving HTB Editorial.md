@@ -25,7 +25,7 @@ I launched a web browser to review the site, which redirected to hxxp[://]editor
 
 Soon after, I found a page with a "Book information" form and started testing it. The first field allowed me to enter a URL, so I provided one that pointed back to the IP address of my VPN interface on my Kali VM. I then started a netcat listener on port 80 on my VM.
 
-![Editorial Upload Page][Images/UWLPT/01-ssrf.png]
+![Editorial Upload Page](Images/UWLPT/01-ssrf.png)
 
 After a couple of false starts, I was able to determine that I needed to select "Preview" to receive a connection back. I was using Burp Suite to allow me to easily change the request for testing. Forwarding the Request along results in a response that directs to a JPEG image file.
 
