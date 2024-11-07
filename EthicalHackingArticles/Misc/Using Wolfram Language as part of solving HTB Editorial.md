@@ -21,7 +21,7 @@ PORT   STATE SERVICE REASON         VERSION
 |_http-server-header: nginx/1.18.0 (Ubuntu)
 ```
 
-I proceed to launch a web browser to review the site. There is a redirect to http://editorial.htb so this doesn't load because editorial.htb doesn't resolve. After adding editorial.htb along with it's IP Address to /etc/hosts, I reload the page and am able to browse it. In short order, I came across the page below and started to test the form. The first field in the Book information form allowed entering a URL so I entered a URL that pointed back to my IP Address of the VPN interface on my Kail VM. I then started a `netcat` listener on port 80 on my VM.
+I proceed to launch a web browser to review the site. There is a redirect to `hxxp[://]editorial[.]htb `so this doesn't load because editorial.htb doesn't resolve. After adding editorial.htb along with it's IP Address to /etc/hosts, I reload the page and am able to browse it. In short order, I came across the page below and started to test the form. The first field in the Book information form allowed entering a URL so I entered a URL that pointed back to my IP Address of the VPN interface on my Kail VM. I then started a `netcat` listener on port 80 on my VM.
 
 ![Editorial Upload Page][Images/UWLPT/01-ssrf.png]
 
@@ -86,5 +86,8 @@ This request returns a JSON respose.
 
 ![JSON Response Text](Images/UWLPT/14-wl-json.png)
 
-Reviewing the response, the author's endpoint  or the changelog seem to be the most interesting, but why not retrieve them all.
+Let's retrieve all the endpoints, and as one can see below, login credentials are retrieved.
 
+![Credentials for dev](Images/UWLPT/15-wl-found-password.png)
+
+I was able to use the credentials to get a shell on the machine using ssh impersonating dev. While enumerating and finding the initial exploit didn't use standard hacker tools, I did find devising an alternative exploit tool using Wolfram Mathematica satisfying. 
