@@ -21,11 +21,13 @@ PORT   STATE SERVICE REASON         VERSION
 |_http-server-header: nginx/1.18.0 (Ubuntu)
 ```
 
-I proceed to launch a web browser to review the site. There is a redirect to `hxxp[://]editorial[.]htb `so this doesn't load because editorial.htb doesn't resolve. After adding editorial.htb along with it's IP Address to /etc/hosts, I reload the page and am able to browse it. In short order, I came across the page below and started to test the form. The first field in the Book information form allowed entering a URL so I entered a URL that pointed back to my IP Address of the VPN interface on my Kail VM. I then started a `netcat` listener on port 80 on my VM.
+I launched a web browser to review the site, which redirected to hxxp[://]editorial[.]htb, but the page didn’t load since editorial.htb didn't resolve. After adding editorial.htb and its IP address to /etc/hosts, I reloaded the page and could access it.
+
+Soon after, I found a page with a "Book information" form and started testing it. The first field allowed me to enter a URL, so I provided one that pointed back to the IP address of my VPN interface on my Kali VM. I then started a netcat listener on port 80 on my VM.
 
 ![Editorial Upload Page][Images/UWLPT/01-ssrf.png]
 
-After a couple of false starts, I was able to determine that I needed to select "Prieview" to receive a connection back. I was using BurpSuite to allow me to easily change the request for testing. Forwarding the Request along results in a response that directs to a JPEG image file.
+After a couple of false starts, I was able to determine that I needed to select "Preview" to receive a connection back. I was using Burp Suite to allow me to easily change the request for testing. Forwarding the Request along results in a response that directs to a JPEG image file.
 
 
 ![Netcat listener connection along with BurpSuite Request and Response](Images/UWLPT/02-ssrf-confirmed.png)
@@ -35,9 +37,9 @@ Based on the response, it seems we're looking at an Server-Side Request Forgery 
 
 ![Probing localhost](Images/UWLPT/04-localhost.png)
 
-My next thought was to try and figure out if another web server or even service was running locally. To test this theory, I would need to test all 65535 possible TCP ports that could be open internally. Testing all these ports isn't difficult, but automating the testing requires taking the request and fuzzing possible ports `http://127.0.0.1:FUZZ` and then reviewing the response. This can be done using `ffuf` or other fuzzing tool, but I decided that I'd try using `Wolfram Mathematica` for no other reason that I wanted to try.
+My next approach was to determine if another web server or service was running locally. To test this, I needed to scan all 65,535 possible TCP ports internally. While testing each port isn't challenging, automating it requires crafting requests that dynamically insert each port, like` http://127.0.0.1:FUZZ`, and then reviewing the responses. Although tools like ffuf are well-suited for this task, I decided to experiment with Wolfram Mathematica to explore its potential in this context.
 
-I started with the basic text of the request from Burp Suite and convert the request to a function template so I could insert port numbers easily. I'm no pro Wolfram Language coder, so keep this in mind because my solution probably isn't near optimal, but it worked. The code to make the requests is below. The code works by providing a port number and if the response doesn't contain the string `/static/images/`, the port and response Body are printed; otherwise, just print the port. The only reason I printed the port if `/static/images/` was matched was to verify my code worked.
+I started by taking a basic HTTP request template from Burp Suite and converting it into a function template in Wolfram Language that allowed for port insertion. While I’m not a pro with Wolfram Language, the solution worked for this purpose. Below is the code that makes these requests. It takes a port number as input, and if the response body doesn’t contain /static/images/, it outputs the port and response body. If /static/images/ is found, it simply prints the port number to confirm the code's functionality.
 
 ```mathematica
 makeRequests[port_]:=Module[{boundary,bt,request,response},
@@ -60,7 +62,7 @@ If[!StringContainsQ[response["Body"],"/static/images/"],Print[<|port->response["
 ]
 ```
 
-I didn't want to run over all +65k ports so I started with a list of commonly using web ports.
+I didn't want to run over all +65k ports, so I started with a list of commonly using web ports.
 
 ```mathematica
 popularWebserverPorts={"80","443","8080","8443","8000","8888","8081","8444","3000","9000","5000","8082","9090","8880"};
