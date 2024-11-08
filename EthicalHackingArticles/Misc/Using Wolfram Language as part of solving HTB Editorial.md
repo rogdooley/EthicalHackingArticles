@@ -1,4 +1,4 @@
-Editorial (https://app.hackthebox.com/machines/608) from Hack The Box is vulnerable by design Linux machine and was part of their Season 5 competition. At the time, I was knee-deep in my OSEP studies, but I still found some time to work on other pentesting skills by trying to solve boxes for this competition. 
+Editorial (https://app.hackthebox.com/machines/608) from Hack The Box is a vulnerable by design Linux machine and was part of their Season 5 competition. At the time, I was knee-deep in my OSEP studies, but I still found some time to work on other pentesting skills by trying to solve boxes for this competition. 
 
 Initial enumeration revealed a web server running on port 80 and ssh on port 22.
 
