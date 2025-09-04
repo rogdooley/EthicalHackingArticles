@@ -71,6 +71,7 @@ Press CTRL+C to quit
 If you see an error, you might need to make sure the line starting with `return` or `app.run` are indented with a tab or 4 spaces.
 
 And the browser will display something like this:
+
 ![Web Browser View](Images/Part1/01-webbrowser.png)
 
 Now, change the route to:
