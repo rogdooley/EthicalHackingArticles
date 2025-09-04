@@ -11,7 +11,7 @@ tags: [oswe, web-300, poc, flask, python]
 
 ### **Why and Where to Begin**
 
-This series will walk through the process of **building a minimal file-transfer server** in Python. The end goal is to understand the **full `[FileTransferServer](https://github.com/rogdooley/OSWE/blob/main/Utilities/file_transfer_server.py)` class** I have been using for OSWE/WEB-300 style exploit development.
+This series will walk through the process of **building a minimal file-transfer server** in Python. The end goal is to understand the **full [FileTransferServer](https://github.com/rogdooley/OSWE/blob/main/Utilities/file_transfer_server.py) class** I have been using for OSWE/WEB-300 style exploit development.
 
 Rather than just drop the code or a link with minimal explanation, I’m going to walk through what went into creating this. If you’re aware of the OSWE course, you’ll know that for the exam one is required to write a complete exploit script such that, when run, it results in remote code execution and a shell on the machine where the web application runs. Standing up a web server alongside your code is easy enough (e.g., `python3 -m http.server`), but what if you only want that server running for the portion of the exploit where it is needed? Having a single terminal window running the exploit without needing to manually start a server, drop in the payload, or configure a listener, is far smoother.
 
