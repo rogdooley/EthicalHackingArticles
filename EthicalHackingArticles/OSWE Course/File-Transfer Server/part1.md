@@ -1,11 +1,12 @@
 ---
-
 title: "Building a Minimal File-Transfer Server: Part 1 – Why and Where to Begin"
-
-description: "Starting a guided series to understand Flask, threading, and design choices by building a file-transfer microservice step by step."
-
-tags: [oswe, web-300, poc, flask, python]
-
+description: Breaking down the file-transfer service I use in OSWE/Web-300 workflows — from a minimal Flask app to a tool that handles downloads, uploads, exfiltration, and automatic shutdown during exploit chains.
+tags:
+  - oswe
+  - web-300
+  - poc
+  - flask
+  - python
 ---
 # Part 1: Building a Minimal File-Transfer Server
 
