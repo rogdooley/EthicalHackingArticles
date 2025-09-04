@@ -71,7 +71,7 @@ Press CTRL+C to quit
 If you see an error, you might need to make sure the line starting with `return` or `app.run` are indented with a tab or 4 spaces.
 
 And the browser will display something like this:
-![Web Browser View][Images/Part1/01-webbrowser.png]
+![Web Browser View](Images/Part1/01-webbrowser.png)
 
 Now, change the route to:
 ```python
@@ -79,11 +79,11 @@ Now, change the route to:
 ```
 Restart the server and visit http://127.0.0.1:8888/. You’ll get an error page like this:
 
-![Not Found][Images/Part1/03-browser-response.png]
+![Not Found](Images/Part1/03-browser-response.png)
 
 Change the URL to http://127.0.0.1:8888/new-location and the return value will be displayed:
 
-![New URL][Images/Part1/04-new-location.png]
+![New URL](Images/Part1/04-new-location.png)
 
 We could even add multiple routes:
 ```python
