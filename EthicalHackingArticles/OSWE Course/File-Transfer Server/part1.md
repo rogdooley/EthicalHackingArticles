@@ -7,9 +7,9 @@ description: "Starting a guided series to understand Flask, threading, and desig
 tags: [oswe, web-300, poc, flask, python]
 
 ---
-# Building a Minimal File-Transfer Server
+# Part 1: Building a Minimal File-Transfer Server
 
-### **Part 1 – Why and Where to Begin**
+### **Why and Where to Begin**
 
 This series will walk through the process of **building a minimal file-transfer server** in Python. The end goal is to understand the **full `FileTransferServer` class** I have been using for OSWE/WEB-300 style exploit development.
 
