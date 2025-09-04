@@ -35,6 +35,8 @@ We'll use [Flask](https://flask.palletsprojects.com/en/stable/) as the web serve
   
 Before we think about uploads, downloads, or exfiltration, we need the **most basic Flask server** that can respond to a request. The program below imports the Flask class, creates an instance, and maps the `/` route to the `index` function. Save this as `server.py`.
 
+Flask uses the term _route_ for a URL path that maps to a function. In the example below,  `/` is the route and `index()` is the function that responds to it.
+
 
 ```python
 from flask import Flask
@@ -101,3 +103,5 @@ if __name__ == "__main__":
 ```
 
 If you name or label routes with gibberish, discovering the exact URLs by directory busting becomes harder for defenders. By configuring specific routes, we can define endpoints for downloads, uploads, or both — while keeping them obscure. Another aspect we’ll develop later is that, after a payload is transferred (once or a few times), the server can automatically shut itself down.
+
+For further explorations, take a look at the [Flask Documentation](https://flask.palletsprojects.com/en/stable/)and make some changes to above code, or write your own. Change the listening port to something other than `8888`. Map a route to a directory. There's plenty to experiment with, even in this simple example.
