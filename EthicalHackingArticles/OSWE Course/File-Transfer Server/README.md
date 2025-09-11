@@ -54,4 +54,4 @@ Instead of presenting the final class at once, each post adds one feature at a t
 
 ## Next Step
 
-Begin with [Part 1 – Why and Where to Begin](./part1.md).
+Begin with [Part 1 – Why and Where to Begin](OSWE%20Course/File-Transfer%20Server/Part1.md).
