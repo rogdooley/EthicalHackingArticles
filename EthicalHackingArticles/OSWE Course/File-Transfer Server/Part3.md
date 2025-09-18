@@ -56,6 +56,69 @@ if __name__ == "__main__":
 
 ```
 
+As a slight aside, the `files` property is an immutable dictionary-like object from the `Werkzeug Library`. It's dictionary-like due to the object handling multiple values for the same key. So, under the hood, you would have something like the following:
+
+```python
+from werkzeug.datastructures import ImmutableMultiDict
+form_data = ImmutableMultiDict([('filename','my_file'),('filename', 'another_file'), ('foo', 'bar')]) 
+print(form_data.get('filename'))
+print(form_data.getlist('filename'))
+```
+
+From a REPL:
+```python
+>>> print(form_data.get('filename'))
+my_file
+>>> print(form_data.getlist('filename'))
+['my_file', 'another_file']
+```
+
+[Werkzeug FileStorage ](https://werkzeug.palletsprojects.com/en/stable/datastructures/#werkzeug.datastructures.FileStorage)
+
+```python
+@app.route("/inspect-upload", methods=["POST"])
+def inspect_upload():
+    if "file" not in request.files:
+        abort(400, "No file in request")
+
+    f = request.files["file"]  # Werkzeug FileStorage 
+
+    # Basic metadata
+    content_type = f.mimetype            
+    filename = f.filename
+    content_length = request.content_length  
+
+    first_bytes = f.stream.read(10)
+    try:
+        f.stream.seek(0)
+    except (AttributeError, OSError):
+        pass
+
+    # Pick a few useful headers instead of dumping everything
+    content_type_header = request.headers.get("Content-Type")
+    user_agent = request.headers.get("User-Agent", "<none>")
+
+    # Log/print (avoid in production — here for teaching/debugging)
+    print(f"Content Type (mimetype): {content_type}")
+    print(f"Filename: {filename}")
+    print(f"Request Content-Length: {content_length}")
+    print(f"Content-Type header: {content_type_header}")
+    print(f"User-Agent: {user_agent}")
+    print(f"First 10 bytes (hex): {first_bytes.hex() if first_bytes else '<empty>'}")
+
+    return {
+        "filename": filename,
+        "mimetype": content_type,
+        "first_bytes": first_bytes.hex() if first_bytes else None
+    }, 200
+
+```
+
+```bash
+curl -F "file=@my_file" http://127.0.0.1:8888/inspect-upload
+```
+
+![Under the hood for an upload](Images/Part3/02-inspect-file.png)
 
 If you wanted to accept all files, you could change `file = ... return ...` to something like this:
 
