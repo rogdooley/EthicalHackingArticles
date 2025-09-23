@@ -20,7 +20,11 @@ tags: [flask, uploads, multipart, http]
 - **Milestone:** curl POST works; file appears on disk with expected name.
 - **Troubleshooting:** Missing `Content-Type`, wrong form field name, empty files.
 
+A natural progression from allowing file downloads from the web server is to allow uploads. When performing assessments, there can be conditions where you need to transfer a file or files from a host to the attacking machine. Knowing how to create an instance of a server that can accept file uploads can be a nice skill to possess. I'll attempt to show how this is done using *Python* and *Flask*. 
 
+In the interest of security, I'll define the the name of the file to be uploaded (`UPLOAD_FILE`), the directory where to store any uploaded files (`UPLOAD_DIRECTORY`) and the path to tack onto a url (`ROUTE`) . I've named these with rather pedestrian strings for the purpose of this example. If you ever need to do this in the wild, providing random names for any or all of these is easily accomplished. 
+
+Apart from the initialization, I'll need to call on a few modules to help create this server. `Path` from *pathlib*  is used for file and directory handling. From *Flask*, import `Flask`, `request`, and `abort`. `Flask`is the method used to create the web application instance. `request` allows one to handle HTTP requests, and `abort` will allow the stoppage of a request handling and return the error code for a bad HTTP request (400).
 
 ```python
 from pathlib import Path
@@ -30,7 +34,7 @@ from werkzeug.utils import secure_filename
 app = Flask(__name__)
 
 UPLOAD_FILE = "my_file"
-UPLOAD_DIRECTORY="./upload2"
+UPLOAD_DIRECTORY="./upload"
 ROUTE="/upload"
 
 Path(UPLOAD_DIRECTORY).mkdir(parents=True, exist_ok=True)
@@ -54,6 +58,24 @@ def handle_upload():
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=8888, debug=False)
 
+```
+
+```txt
+POST /upload HTTP/1.1
+Host: localhost:8888
+Content-Type: multipart/form-data; boundary=----abc123
+Content-Length: 253
+
+------abc123
+Content-Disposition: form-data; name="username"
+
+roger
+------abc123
+Content-Disposition: form-data; name="file"; filename="payload.bin"
+Content-Type: application/octet-stream
+
+<binary bytes of payload.bin here>
+------abc123--
 ```
 
 As a slight aside, the `files` property is an immutable dictionary-like object from the `Werkzeug Library`. It's dictionary-like due to the object handling multiple values for the same key. So, under the hood, you would have something like the following:
@@ -152,3 +174,16 @@ curl -F "alpha=@test1.txt" -F "beta=@test2.txt" http://127.0.0.1:8888/upload
 
 ## What’s Next
 - Base64-encoded exfil via query/body for hostile transports.
+
+### **Upload methods with** **curl**
+
+| **Curl Flag**                                    | **Content-Type sent**              | **Body Structure**                                 | **Flask Accessor**                                        | **Typical Use Case**                 |
+| ------------------------------------------------ | ---------------------------------- | -------------------------------------------------- | --------------------------------------------------------- | ------------------------------------ |
+| -d "a=1&b=2"                                     | application/x-www-form-urlencoded  | a=1&b=2                                            | request.form["a"], request.form["b"]                      | Classic HTML forms                   |
+| -d '{"x":1}' -H "Content-Type: application/json" | application/json                   | Raw JSON string                                    | request.json or request.get_json()                        | REST APIs, JSON payloads             |
+| -F "file=@payload.bin"                           | multipart/form-data; boundary=...  | Multipart with boundaries, one part per field/file | Files: request.files["file"]Fields: request.form["field"] | Browser-style file uploads           |
+| --data-binary @file.bin                          | application/octet-stream (default) | Raw file bytes                                     | request.data (raw bytes)                                  | Upload raw binary (no form encoding) |
+| -T payload.bin                                   | application/octet-stream (default) | Raw file bytes                                     | request.data (if POST/PUT handler)                        | PUT/POST raw file, often for APIs    |
+
+
+
