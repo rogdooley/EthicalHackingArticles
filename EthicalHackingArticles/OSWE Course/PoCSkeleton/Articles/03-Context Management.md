@@ -129,3 +129,15 @@ class ExploitContext:
         default_factory=lambda: Path("exploit_context.json"), repr=False
     )
 ```
+
+```python
+    ctx = ExploitContext(
+        target_ip=args.target_ip,
+        target_port=args.target_port,
+        attacker_ip=args.listening_ip,
+        attacker_port=args.listening_port,
+        protocol="http",
+        vuln_name="authrise",
+        poc_id="01",
+    )
+```

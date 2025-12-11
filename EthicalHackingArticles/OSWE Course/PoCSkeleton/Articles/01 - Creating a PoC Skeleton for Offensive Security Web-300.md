@@ -22,13 +22,13 @@ When I started programming small scripts for the case studies, I didn't have muc
 
 What I set out to accomplish was to create a scaffold that relied on Python standard libraries or well known libraries. I wanted external dependencies kept to a minimum as well as having an audit trail while the script was running. Sure you can insert print statements galore, but with a little work, one can create their own logging system that can be called like other libraries.
 
-To that end, I always used [uv](https://docs.astral.sh/uv/) to initialize my challenge labs base diretory. `uv` currently isn't a package one can install with `apt install`. Installation is fairly straightforward though. From a terminal, run:
+To that end, I always used [uv](https://docs.astral.sh/uv/) to initialize my challenge labs base directoryt. `uv` currently isn't a package one can install with `apt install`. Installation is fairly straightforward though. From a terminal, run:
 ```bash
 curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
-This will install uv in `$HOME/.local/bin/uv`. Let's say I configured a top level directory for my challenge labs like `$HOME/OSWE/ChallengeLabs`. I can `cd` to `ChallengeLabs` and then start my first lab project. For the sake of this and the rest of the articles, we'll be using the fictitious web application `Authrise` as the lab environment. Let's set this up so that by the end of this series we'll have a mostly or totally complete PoC skeleton written in Python.
+This will install uv in `$HOME/.local/bin/uv`. Let's say I configured a top level directory for my challenge labs like `$HOME/OSWE/ChallengeLabs`. I can `cd` to `ChallengeLabs` and then start my first lab project. For the sake of this and the rest of the articles, we'll be using the fictitious web application `Authrise` as the lab environment. Let's set this up so that by the end of this series we'll have a mostly or totally complete PoC skeleton written in Python. We use `uv` as a replacement for `pip + venv + poetry-style behavior`. `uv` keeps the skeleton reproducible across all labs. `uv` will allow us to install various 3rd part dependencies in the virtual environment it creates.
 
-To create the base of the project, from `$HOME/OSWE/ChallengeLabs`, execute (remove `--vcs git` if you don't want version control):
+The base of the project, from `$HOME/OSWE/ChallengeLabs`, is created by executing (remove `--vcs git` if you don't want version control):
 ```bash
 ❯ uv init --bare --no-readme --vcs git authrise
 Initialized project `authrise` at `$HOME/OSWE/ChallengeLabs/authrise`
@@ -68,6 +68,7 @@ authrise
 └── pyproject.toml
 
 ```
+
 `pyproject.toml` will currently contain a very basic structure which we'll fill in by editing or managing with `uv` over the course of these articles.
 ```bash
 ❯ cat pyproject.toml
@@ -78,7 +79,34 @@ requires-python = ">=3.13"
 dependencies = []
 ```
 
-At this point, I would add a couple of directories and a file, `Notes.md` to round off the initial layout.
+If you decide to use version control with git, now is a good time to configure `.gitignore` so that various artifacts won't end up in version control. I found this configuration a good starting off point. I'm using [VS Codium](https://vscodium.com/)for my IDE with various plugins. Your .gitignore might look significantly different.
+
+```bash
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Environments
+.env
+env/
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# vscode
+.vscode/
+```
+
+Given some thought to other pieces to start with, I created a few directories for storing logs,  any items that might be saved from the exploit into archives, and a place to store screenshots. For notes, I created `Notes.md` in the root directory.
 
 ```bash
 ❯ touch Notes.md
@@ -95,14 +123,26 @@ At this point, I would add a couple of directories and a file, `Notes.md` to rou
 
 ```
 
-Next, we’ll make this project interactive by wiring up a flexible CLI with _argparse_ _and env-based configuration.
+This will be the directory structure for every lab and for the exam. We'll extend this in later articles by adding custom modules and building the PoC skeleton. I used `Notes.md` to save  any information I thought might be relevant to understanding the web application presented. This would include POST request bodies along with responses, database table descriptions, etc... For the exam, copying code from the Offsec machines to your machine is strictly forbidden, so having screenshots is a good way to remind yourself where a certain vulnerability lies.
 
-2. Argument Parsing with argparse
-3. Making http requests with httpx instead of requests
-4. Creating a dataclass to store and read in various information about the target and attacker
-5. Creating a layout and using uv
-6. Structured Logging
-7. Custom web server for hosting or receiving payloads
-8. Concurrency Concepts (async)
-9. Control Flow and Stage Management
-10. Fictitious blind sqli example (async vs linear and binary vs linear and maybe async binary vs async linear) 
+Up until now, I haven't made mention of any Python code. What you name your script is up to you. I tended to favor naming the script either exploit.py or using the web application name. For this example, I'm going to just use poc.py.  Below is a very barebones starting point.
+
+```python
+def main():
+	print("Starting PoC")
+	
+if __name__ == "__main__":
+    main()
+```
+
+The code is very uninteresting, but it's a first step to building a reusable code will contain context handling, logging, payload serving, concurrency, and stage management. Each program will have a list of configuration options that are required to run the code against the target. To that end, we’ll make this project interactive by wiring up a flexible CLI with _argparse_ . We’ll also briefly look at using an environment file for configuration. It keeps commands short, but it comes with trade-offs. In the next part I'll present how to configure both and decide which one I choose  for the best balance of clarity and operator flexibility. Doing so will allow us and any other user's of our code to change the target's IP address, the attacker's address, and many other options that allows the operator flexibility when interacting with the PoC.  
+
+My plan for this series is to build the code base to show you how to I built up my PoC over the course of a few months with the goal of having you develop your own. I'm planning on proceeding from single topics that progress to testing  the poc against a fictitious server with an sql flaw that will allow us to extract a token and showing the difference between a linear and binary search. 
+
+2. Argument Parsing with argparse with a brief mention of using dotenv
+3. Creating a dataclass to store and read in various information about the target and attacker
+4. Structured Logging
+5. Custom web server for hosting or receiving payloads
+6. Concurrency Concepts (async)
+7. Control Flow and Stage Management
+8. Fictitious blind sqli example (async vs linear and binary vs linear and maybe async binary vs async linear) 
