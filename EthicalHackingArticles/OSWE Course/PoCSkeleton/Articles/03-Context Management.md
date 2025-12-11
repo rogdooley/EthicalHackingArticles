@@ -6,12 +6,9 @@
 - [ ] Justify using a `@dataclass` (mention `slots=True` and Python 3.12+ support)
 - [ ] Explain how `ExploitContext` can be populated from `argparse` or `.env` values (parsed config already exists)
 - [ ] Include reasoning for separating user identity fields vs target-specific fields vs exploit state
-- [ ] Decide where session management (`httpx.Client`) will live—inside the context or passed into it
-- [ ] Mention future plans to expand this: `urls`, `auth_token`, `is_admin`, `exploit_stage`, etc.
 - [ ] Consider including a `.from_config(config: dict)` constructor or similar
 - [ ] Add commentary on why this structure is critical for reuse between labs and exploit stages
-- [ ] Optional: briefly preview future methods (`login()`, `rotate_token()`, `dump_flag()`) that would use this object
-- [ ] Optional: discuss why you’re deferring the full-blown “ExploitRunner” or chaining logic for now
+
 
 From the last article, I described how using Python's argparse functionality allowed the easy use of configuring different command line arguments along with default behavior so that when executing a PoC script, when various values like the target IP address change, reflecting that change is straightforward without needed to touch the written script. With those parameters now available internally, one way to store the values internally involve initializing variables to store the values. For example, the target could have input arguments like:
 
