@@ -1,16 +1,3 @@
-## Rewrite Flow Notes (Part 1: Project Setup)
-
-- [ ] Strengthen the opening paragraph to explain the goal of the series—creating a reusable PoC skeleton for OSWE labs
-- [ ] Clarify that each lab will live in its own directory and follow a consistent naming/layout pattern
-- [ ] Introduce `uv` earlier as a tool choice, and briefly explain why it was picked (speed, reproducibility, modern Python)
-- [ ] Explain why `.env` files are preferred over hardcoded values or inline arguments—more maintainable across labs
-- [ ] Consider inserting a sample tree view *after* the directory is created with `uv init`
-- [ ] Mention the purpose of each folder (`Archives/`, `Logs/`, `Screenshots/`) with one line of intent per directory
-- [ ] Explicitly state the philosophy: low external deps, auditability, portability
-- [ ] Add a sentence previewing that CLI wiring and `argparse` will come next
-- [ ] Tighten grammar and remove repeated phrases (e.g., repeated "when I started" blocks)
-- [ ] Optional: include `.gitignore` suggestions to hide compiled files, logs, env files, etc.
-
 
 During the start of one's journey taking [Offensive Security's Advanced Web Attacks and Exploitation ](https://www.offsec.com/courses/web-300/) course, you learn that the exam will require the creation of Proof of Concept (PoC) code that, when executed, will exploit a web application and ultimately end with a shell on the machine. While student's are free to choose what programming language they might use to create a PoC, Python seems to be the dominate language used by the students and the course mentors. 
 
