@@ -162,7 +162,7 @@ My plan for this series is to build the code base to show you how to I built up 
 This article establishes the foundation for the PoC skeleton. Each subsequent part builds on this structure incrementally.
 
 2. [02 - Argument Parsing for OSWE PoCs - argparse vs dotenv](<02 -  Argument Parsing for OSWE PoCs - argparse vs dotenv.md>)
-3. Creating a dataclass to store and manage target and attacker context
+3. [03 - Managing Target and Attacker State with Dataclasses](<03 - Managing Target and Attacker State with Dataclasses.md>)
 4. Structured logging for exploit development
 5. A custom web server for hosting or receiving payloads
 6. Concurrency concepts using async
