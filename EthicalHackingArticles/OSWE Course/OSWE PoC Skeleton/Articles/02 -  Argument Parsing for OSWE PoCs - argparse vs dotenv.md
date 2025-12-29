@@ -208,7 +208,9 @@ A nice feature of argparse is that allows you to group arguments into sections. 
 
 For target options, I considered the ip address, port, and a possible api port. I could have expanded this to have a api ip address if I desired. Attacker options centered around my Kali host and how I'd present say a reverse shell port or payload delivery using a web server to the victim. Identity options were configured to make use of my custom identity generator. There are options that allow me to reuse an existing configured user on the web application or set the password complexity, etc... 
 
-Throughout the course, students will find they need to extract tokens using SQLi or have to generate tokens using various character sets. Maybe the character set might be restricted to just the alphabet or maybe just hex characters. To this end, I constructed a few character sets and included the ability to call on those character sets with a CLI option. As a result of these decisions, I ended up with a beginning skeleton PoC as presented below. Depending on your use case, what I've presented here may be too broad in scope, or maybe not enough.
+Once I started seeing the same categories of inputs appear repeatedly across labs, I stopped thinking in terms of individual flags and started thinking in terms of roles. Target details, attacker settings, exploit behavior, and identity data each form a coherent group that benefits from being treated consistently.
+
+The following example represents the point where my argument parsing stabilized. It is intentionally broader than any single lab requires, because its purpose is to be reusable.
 
 
 ```python
@@ -380,3 +382,6 @@ Optional options:
   --proxy PROXY         Turn on Burp Suite proxy for debugging.
 ```
 
+At this point, we have a well-defined interface for interacting with the PoC. The script can be configured explicitly, arguments are discoverable, and related options are grouped in a way that reflects how exploits are actually built and operated.
+
+What we do *not* yet have is a clean way to pass this configuration through the rest of the codebase without threading argument objects everywhere. In the next article, we’ll address that by introducing a structured context object using Python dataclasses, which will allow us to centralize state and simplify the logic of multi-stage exploits.
