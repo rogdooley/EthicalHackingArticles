@@ -401,8 +401,7 @@ At this point, we have a well-defined interface for interacting with the PoC. Th
 
 What we do *not* yet have is a clean way to pass this configuration through the rest of the codebase without threading argument objects everywhere. In the next article, we’ll address that by introducing a structured context object using Python dataclasses, which will allow us to centralize state and simplify the logic of multi-stage exploits.
 
-### Next
-
-** [03 - Managing Target and Attacker State with Dataclasses](<03 - Managing Target and Attacker State with Dataclasses.md>) **
+### Next:
+[03 - Managing Target and Attacker State with Dataclasses](<03 - Managing Target and Attacker State with Dataclasses.md>) 
 
 In the next article, we’ll introduce a structured context object to carry configuration and runtime state through the exploit cleanly, without passing argument objects through every function.
