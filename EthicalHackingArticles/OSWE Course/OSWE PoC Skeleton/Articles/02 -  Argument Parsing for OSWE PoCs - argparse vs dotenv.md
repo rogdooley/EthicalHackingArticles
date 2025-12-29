@@ -12,6 +12,8 @@ tags:
   - argparse
   - dotenv
 ---
+This article builds directly on the project structure established in [Part 01](<01 - Building a Reusable PoC Skeleton for OSWE - Project Setup.md>) and focuses on how configuration is supplied to the PoC at runtime.
+
 Python's argparse module is the standard way to build command-line interfaces (CLI). For building a PoC exploit script, one can control  how inputs like targets, proxies, etc... are handled. By implementing a comprehensive design, the need to constantly re-write scripts between runs and between labs is eliminated. Generally, knowing all that might be built into the script is difficult. 
 
 How many arguments do you need? Should there be defaults for certain arguments? What arguments will be required? Asking yourself questions like this will guide the shape of your script and the various arguments that are considered. What we're about to do isn't written in stone. Don't be afraid to remove items that don't make sense to your or to add ones that do. It's your skeleton to construct as you please. With that said, let's look at a basic command that we might build using argparse and dotenv.
