@@ -3,7 +3,9 @@ Python's argparse module is the standard way to build command-line interfaces (C
 
 How many arguments do you need? Should there be defaults for certain arguments? What arguments will be required? Asking yourself questions like this will guide the shape of your script and the various arguments that are considered. What we're about to do isn't written in stone. Don't be afraid to remove items that don't make sense to your or to add ones that do. It's your skeleton to construct as you please. With that said, let's look at a basic command that we might build using argparse and dotenv.
 
-Let's repeat this process but now use a env file which would take the following form. First add `python-dotenv` to our virtual environment.
+As an alternative, some projects use an environment file to store configuration values. This approach can reduce command length and centralize configuration, which can be appealing when iterating quickly.
+
+Below is an example `.env` file containing the same types of values we would otherwise pass via the command line. The goal here is not to build a full configuration system, but to highlight how this approach differs in practice.
 
 ```bash
 uv add python-dotenv
@@ -105,8 +107,6 @@ def parse_config(env_file: str = "authrise.env") -> dict[str, object]:
 def main():
     config = parse_config()
 
-    print(f"Target IP: {config['TARGET_IP']}")
-    print(f"Target Port: {config['TARGET_PORT']}")
     print(f"Register new user: {config['REGISTER']}")
     print(f"Target IP: {config['TARGET_IP']}")
     print(f"Target Port: {config['TARGET_PORT']}")
@@ -121,8 +121,6 @@ if __name__ == "__main__":
 
 ```bash
 ❯ uv run poc-env.py
-Target IP: 192.168.122.45
-Target Port: 8080
 Register new user: True
 Target IP: 192.168.122.45
 Target Port: 8080
@@ -132,30 +130,9 @@ Listening Port: 9001
 
 One major difference between the dotenv and argparse methods is that when using argparse, you have an instant help flag that isn't available with the dotenv method. One can write a help method for a dotenv by adding in code like:
 
-```python
-import sys
+One immediate drawback of the environment file approach is discoverability. Unlike `argparse`, there is no built-in `--help` flag. While it’s possible to manually emulate help output, doing so quickly becomes custom, brittle, and repetitive across projects.
 
-if "--help" in sys.argv:
-    print("Usage: Set the following in your .env file (e.g., authrise.env):")
-    print("""
-TARGET_IP=               # Required
-TARGET_PORT=80
-TARGET_API_PORT=5000
-LISTENING_IP=127.0.0.1
-LISTENING_PORT=9001
-PAYLOAD_PORT=9999
-DELAY=3
-USER_FILE=user.json
-REGISTER=false
-INCLUDE_ADDRESS=false
-INCLUDE_PHONE=false
-CHARSET=alnum
-PROXY=http://127.0.0.1:8080
-    """)
-    sys.exit(0)
-```
-
-I like using env file for certain projects, but when developing the PoC skeleton, I wasn't overly fond of this setup, preferring argparse and the ability to have a nice help menu if needed like most all command line utilities. In addition, all of the values in the env file are strings. You'd need to do some conversion after the values are loaded. I just presented this here as an option as I'm sure there are others. 
+For some workflows, environment files are a reasonable choice. However, when developing a reusable PoC skeleton, especially one intended to be run repeatedly, shared, or revisited under time pressure. I found the lack of built-in help and the need for manual type conversion to be limiting. For those reasons, I ultimately preferred an explicit command-line interface built with `argparse`. 
 
 Recall, we have a fictitious `uv` project in a directory labeled authrise. If you `cd` into that directory, and use an editor to build a file we'll call poc-args.py. The aim is to start building a workable PoC that we can reuse and doesn't rely on hard-coded values thus providing flexibility to any environment we will end up working in. Here's an example of the beginnings of a simple CLI with arguments.
 ```bash
