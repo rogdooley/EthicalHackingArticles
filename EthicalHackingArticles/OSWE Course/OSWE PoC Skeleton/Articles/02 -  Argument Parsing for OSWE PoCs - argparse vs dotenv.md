@@ -1,4 +1,17 @@
-
+---
+title: "02 - Argument Parsing for OSWE PoCs - argparse vs dotenv"
+description: "Designing explicit, discoverable configuration for exploit code using argparse and evaluating environment-based alternatives."
+series: "OSWE PoC Skeleton"
+series_order: 2
+tags:
+  - oswe
+  - web-300
+  - exploit-development
+  - poc
+  - python
+  - argparse
+  - dotenv
+---
 Python's argparse module is the standard way to build command-line interfaces (CLI). For building a PoC exploit script, one can control  how inputs like targets, proxies, etc... are handled. By implementing a comprehensive design, the need to constantly re-write scripts between runs and between labs is eliminated. Generally, knowing all that might be built into the script is difficult. 
 
 How many arguments do you need? Should there be defaults for certain arguments? What arguments will be required? Asking yourself questions like this will guide the shape of your script and the various arguments that are considered. What we're about to do isn't written in stone. Don't be afraid to remove items that don't make sense to your or to add ones that do. It's your skeleton to construct as you please. With that said, let's look at a basic command that we might build using argparse and dotenv.
@@ -385,3 +398,9 @@ Optional options:
 At this point, we have a well-defined interface for interacting with the PoC. The script can be configured explicitly, arguments are discoverable, and related options are grouped in a way that reflects how exploits are actually built and operated.
 
 What we do *not* yet have is a clean way to pass this configuration through the rest of the codebase without threading argument objects everywhere. In the next article, we’ll address that by introducing a structured context object using Python dataclasses, which will allow us to centralize state and simplify the logic of multi-stage exploits.
+
+### Next
+
+** [03 - Managing Target and Attacker State with Dataclasses](<03 - Managing Target and Attacker State with Dataclasses.md>) **
+
+In the next article, we’ll introduce a structured context object to carry configuration and runtime state through the exploit cleanly, without passing argument objects through every function.
