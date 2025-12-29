@@ -11,9 +11,6 @@ tags:
   - python
   - offensive-security
 ---
-
-_A practical foundation for repeatable exploit development in OSWE labs_
-
 One of the exam requirements for [Offensive Security's Advanced Web Attacks and Exploitation ](https://www.offsec.com/courses/web-300/) course is the creation of Proof of Concept (PoC) code that, when executed, exploits a web application to obtain a shell or retrieving the required proof.txt file. While students are free to choose what programming language they might use to create a PoC, Python is the dominant choice among both students and course mentors. 
 
 The course consists of many case studies of vulnerable applications and how each one had multiple points of exploitation that, when chained together, would allow complete compromise and remote code execution. After these case studies are completed, there are lab environments that are configured for white box testing. A debug machine with all the source code is provided and then a victim machine where students are expected to find exploit paths and practice writing PoCs that will allow the students to retrieve a series of proof flags on the victim machine and the last flag for each machine requires command execution on the machine.
