@@ -1,3 +1,13 @@
+
+ Introduce the need for a central object or structure to hold configuration, session state, and metadata
+- [ ] Define what kinds of data this structure should track: base URL, headers, cookies, tokens, session, user info, etc.
+- [ ] Mention that this helps avoid passing dozens of function arguments around
+- [ ] Justify using a `@dataclass` (mention `slots=True` and Python 3.12+ support)
+- [ ] Explain how `ExploitContext` can be populated from `argparse` or `.env` values (parsed config already exists)
+- [ ] Include reasoning for separating user identity fields vs target-specific fields vs exploit state
+- [ ] Consider including a `.from_config(config: dict)` constructor or similar
+- [ ] Add commentary on why this structure is critical for reuse between labs and exploit stages
+
 ## ExploitContext Summary
 
 - **Purpose**: Centralizes configuration, identity, session, and metadata for a single PoC run. Reduces argument passing and makes stage chaining easier.

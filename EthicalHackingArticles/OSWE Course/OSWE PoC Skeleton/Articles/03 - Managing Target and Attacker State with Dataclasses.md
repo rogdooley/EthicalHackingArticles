@@ -1,16 +1,7 @@
 ## Drafting Checklist – Article 3: Context Management
 
-- [ ] Introduce the need for a central object or structure to hold configuration, session state, and metadata
-- [ ] Define what kinds of data this structure should track: base URL, headers, cookies, tokens, session, user info, etc.
-- [ ] Mention that this helps avoid passing dozens of function arguments around
-- [ ] Justify using a `@dataclass` (mention `slots=True` and Python 3.12+ support)
-- [ ] Explain how `ExploitContext` can be populated from `argparse` or `.env` values (parsed config already exists)
-- [ ] Include reasoning for separating user identity fields vs target-specific fields vs exploit state
-- [ ] Consider including a `.from_config(config: dict)` constructor or similar
-- [ ] Add commentary on why this structure is critical for reuse between labs and exploit stages
 
-
-From the last article, I described how using Python's argparse functionality allowed the easy use of configuring different command line arguments along with default behavior so that when executing a PoC script, when various values like the target IP address change, reflecting that change is straightforward without needed to touch the written script. With those parameters now available internally, one way to store the values internally involve initializing variables to store the values. For example, the target could have input arguments like:
+In the [last article](<02 -  Argument Parsing for OSWE PoCs - argparse vs dotenv.md>), I described how using Python's argparse functionality allowed easy configuration of different command line arguments. OSWE Challenge Labs usually have a debug and a victim machine. Each VM has a different IP address on their network. While testing the exploit chain, depending on the student, one might move between the debug and victim vm...or not. _argparse_ easily allows the setting of each machines unique configuration without having to edit the PoC code. Parameters can be passed from the command line and stored internally. For example, the target could have input arguments like:
 
 ```python
 parser.add_argument("--target-ip", type=str, required=True, help="Input file path")
@@ -26,9 +17,9 @@ target_ip = args.target_ip
 target_port = args.target_port
 ```
 
-Based on what I have outlined, the argument initializing list could end up very long. 
+Depending on how many arguments are needed and don't conform to a default value, they need to be extracted and stored in variables or will have to be extracted each time they are needed.
 
-Before I explain what I eventually ended up doing to consolidate all the arguments I chose to have, I'd like to briefly run through some of them and a method of organizing them. Based on the objectives for each lab, some options seemed fairly transparent. As I was refining the structure throughout the labs, I learned that one can group arguments with argparse. My choice of grouping was target, attacker, exploit, identity, and optional options.  To group options together, decide on a variable name for the grouping and then use `.add_argument_group("descripton")`. An example of how to start building groupings might look like:
+Before I explain what I eventually ended up doing to consolidate the collection of arguments, I'd like to briefly run through some of them and describe a method for organizing them. Based on the objectives for each lab, some options seemed fairly transparent. As I was refining the structure throughout the labs, I learned that one can group arguments with argparse. My choice of grouping was target, attacker, exploit, identity, and optional options.  To group options together, decide on a variable name for the grouping and then use `.add_argument_group("descripton")`. An example of how to start building groupings might look like:
 
 ```python
 def parse_args():
@@ -104,8 +95,8 @@ I was at 15 options which I could set, but honestly, that is a lot variables to 
 @dataclass(slots=True)
 class ExploitContext:
     target_ip: str
-    web_port: int
-    api_port: int
+    target_port: int
+    target_api_port: int
     attacker_ip: str
     attacker_port: int
     payload_port: int
