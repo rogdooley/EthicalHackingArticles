@@ -1,209 +1,94 @@
-# Article 3 – Context Management
-## Editorial Notes and Improvement Targets
+## Editorial Update – Locking the ExploitContext Design
 
-This document captures suggested improvements and expansion points for Article 3. The goal is to make the `ExploitContext` comprehensive, reusable, and exploit-focused without turning the article into a Python or dataclasses tutorial.
+The current implementation of `ExploitContext` represents a stable and well-scoped baseline. At this point, the article should shift from *exploration* to *justification*. The goal is no longer to enumerate what could be added, but to explain why the current boundaries exist.
 
----
-
-## 1. Clarify the Core Problem Earlier
-
-The article currently shows *how* arguments are grouped and *why* that helps, but it should more explicitly state the **problem** being solved before introducing `ExploitContext`.
-
-Suggested framing to reinforce:
-- The problem is not argparse
-- The problem is *state sprawl*
-- Too many loosely-related variables passed between functions
-- Too many implicit dependencies between exploit stages
-
-You may want one explicit sentence along the lines of:
-> Once argument parsing stabilized, the larger problem became how to carry configuration, runtime state, and discovered data through the exploit without passing dozens of parameters between functions.
-
-This primes the reader for why a context object is necessary.
+The notes below supersede earlier “possible additions” guidance.
 
 ---
 
-## 2. Explicitly Categorize What the Context Holds
+## 1. ExploitContext Scope Is Correct — Do Not Absorb Identity Logic
 
-You already imply this with comments, but making it explicit will improve clarity.
+The current construction pattern deliberately keeps identity generation outside of `ExploitContext`. This is a good design decision and should be defended explicitly in the article.
 
-Recommended categories to describe in prose:
-- **Target configuration** (what you are attacking)
-- **Attacker configuration** (how you are interacting)
-- **Runtime/session state** (what changes as the exploit runs)
-- **Metadata** (operator-facing or reporting information)
+Key points to state clearly:
+- `ExploitContext` owns **environment and exploit state**
+- Identity generation is a **supporting subsystem**
+- Identity inputs (`extras`, `overrides`) are *derived* from CLI arguments, not core exploit state
+- Mixing identity internals into context would tightly couple unrelated concerns
 
-This helps readers understand that `ExploitContext` is not “just config”, but a living object that evolves as the exploit progresses.
-
----
-
-## 3. Naming Consistency (Important)
-
-Ensure field names align cleanly across:
-- argparse arguments
-- dataclass fields
-- downstream usage
-
-You’ve already corrected this partially. Maintain consistency like:
-- `target_ip`, `target_port`, `target_api_port`
-- `attacker_ip`, `attacker_port`, `payload_port`
-
-Avoid mixing `web_port`, `api_port`, and `target_port` unless you explicitly justify the distinction.
-
-This prevents subtle bugs and reduces cognitive overhead when reading exploit stages later.
+This separation keeps the context reusable even for exploits that do not require user creation.
 
 ---
 
-## 4. Add Derived Properties (High Value, Low Complexity)
+## 2. Factory Construction via `from_args` Is the Right Abstraction Boundary
 
-To make the context *useful*, not just *centralized*, consider adding derived properties:
+The `from_args()` classmethod cleanly isolates:
+- CLI parsing concerns
+- Naming mismatches between flags and fields
+- Context initialization logic
 
-Examples to mention (not necessarily implement fully yet):
-- `target_base_url`
-- `api_base_url`
-- `attacker_base_url`
-- `is_https`
-- `proxies` mapping (for httpx)
-- `default_headers`
+Editorial emphasis:
+- Argument parsing should not leak into exploit logic
+- Exploit code should depend on `ExploitContext`, not `argparse.Namespace`
+- Future config sources (dotenv, JSON, test harnesses) can add parallel constructors
 
-Explain the benefit:
-- Prevents recomputing URLs inconsistently
-- Centralizes protocol/port logic
-- Reduces duplicated string formatting across exploit stages
-
-This keeps URL logic out of individual exploit functions.
+You do **not** need to add `.from_config()` now. Mention it as a future option only.
 
 ---
 
-## 5. Introduce a Construction Pattern
+## 3. URL Helpers Are a Major Design Win — Call This Out Explicitly
 
-Right now, `ExploitContext` is instantiated manually from `args`.
+The `_make_url()` + `web_url()` / `api_url()` helpers are exactly the kind of logic that belongs in context.
 
-Recommend introducing (or at least describing) one of:
-- `@classmethod from_args(args)`
-- `@classmethod from_config(config: dict)`
+Suggested framing:
+- URL construction is easy to get subtly wrong
+- Centralizing it prevents inconsistencies across exploit stages
+- Default-port elision avoids noisy URLs in logs and output
+- Protocol handling becomes declarative instead of ad-hoc
+
+This is one of the strongest parts of the design and worth highlighting.
+
+---
+
+## 4. Persistence Is Sufficient — Avoid Turning This Into a State Machine
+
+The current persistence model is intentionally simple:
+- Explicit save
+- JSON format
+- Redaction via exclusion (`output_path`)
+- Type recovery on load
 
 Editorial guidance:
-- argparse or dotenv should produce a normalized config
-- `ExploitContext` should be built from that config in one place
-- This isolates input parsing from exploit logic
+- This is for debugging, replay, and audit trails
+- Not intended as a resumable exploit engine (yet)
+- Runtime-only state (live sessions, sockets) is excluded by design
 
-This also ties cleanly back to Article 2.
-
----
-
-## 6. Validation Belongs in the Context
-
-Consider adding a short section explaining that:
-- Validation should live *with* the data
-- Not scattered across exploit stages
-
-Examples of checks worth mentioning:
-- Required fields present
-- Port ranges valid
-- Protocol values sane
-- Proxy format reasonable
-- Payload port only required when payload hosting is used
-
-You do not need to show all validation code—just justify why it belongs here.
+Do **not** add resumability, checkpoints, or live object restoration at this stage.
 
 ---
 
-## 7. Distinguish Immutable vs Runtime Fields
+## 5. Field Naming: Explain the Trade-Off Once, Then Move On
 
-You already hint at this with “Runtime-only fields”.
+You’ve chosen:
+- `web_port` vs `api_port`
+- `attacker_port` vs `payload_port`
 
-Make the distinction explicit:
-- Some fields should never change after initialization (target/attacker config)
-- Others will evolve (tokens, cookies, stage markers)
+This is reasonable, but readers may wonder why `target_port` was renamed.
 
-This prepares readers for later articles on:
-- Stage management
-- Logging
-- State transitions
+Add one short explanation:
+- Ports are named by *role*, not by CLI flag
+- CLI flags optimize ergonomics
+- Context fields optimize clarity during exploit execution
 
----
-
-## 8. Add Minimal Stage / Run Tracking
-
-To support multi-stage exploits later, consider mentioning:
-- `run_id` (unique per execution)
-- `stage` or `stages_completed`
-
-Explain why:
-- Log correlation
-- Debugging failed chains
-- Re-running partial exploits
-
-This connects directly to the upcoming logging article.
+One paragraph is enough. Do not dwell on it.
 
 ---
 
-## 9. Discovered Data vs Operator Configuration
+## 6. Runtime vs Configuration Is Now Clear Enough
 
-Strongly consider separating:
-- Operator-provided configuration
-- Data discovered during exploitation
+You already have:
+- Configuration fields
+- Auth state
+- Metadata
+- Runtime-only fields
 
-A simple pattern to mention:
-- `discovered: dict[str, Any]`
-
-Examples of what belongs there:
-- Leaked secrets
-- CSRF tokens
-- Admin endpoints
-- Magic link tokens
-
-This avoids ad-hoc globals and keeps exploit state explicit.
-
----
-
-## 10. Serialization and Redaction (Mention, Don’t Overbuild)
-
-You already include `output_path`. Good.
-
-Suggested commentary to add:
-- Contexts are often saved for debugging or reporting
-- Not all fields should be serialized
-- Sensitive fields should be redacted by default
-
-This justifies:
-- `repr=False`
-- future `to_dict(redact=True)` methods
-
----
-
-## 11. Keep the Dataclass Discussion Focused
-
-Limit dataclass-specific explanation to:
-- `slots=True` (memory, typo resistance)
-- `default_factory` for mutable fields
-- Why `frozen=False` is intentional
-
-Avoid deep dives into:
-- ordering
-- comparisons
-- advanced dataclass flags
-
-This keeps the article exploit-focused, not language-focused.
-
----
-
-## 12. Suggested Transition to the Next Article
-
-To close Article 3 cleanly, tee up logging:
-
-Suggested transition concept:
-> Now that configuration and runtime state live in a single, structured object, we can log consistently without passing context manually. In the next article, we’ll build structured logging that automatically includes context metadata such as target, stage, and run ID.
-
-This creates a natural bridge to the logging article.
-
----
-
-## Summary
-
-Article 3 is shaping up well. The remaining work is primarily:
-- Making the motivation explicit
-- Clarifying boundaries and categories
-- Showing how the context enables later stages (logging, flow control)
-
-Focus on **why the context exists**, not just **how it’s implemented**.

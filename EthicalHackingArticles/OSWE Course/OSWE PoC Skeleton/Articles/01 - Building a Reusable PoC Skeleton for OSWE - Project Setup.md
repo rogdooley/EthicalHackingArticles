@@ -162,11 +162,11 @@ My plan for this series is to build the code base to show you how to I built up 
 This article establishes the foundation for the PoC skeleton. Each subsequent part builds on this structure incrementally.
 
 2. [02 - Argument Parsing for OSWE PoCs - argparse vs dotenv](<02 -  Argument Parsing for OSWE PoCs - argparse vs dotenv.md>)
-3. [03 - Managing Target and Attacker State with Dataclasses](<03 - Managing Target and Attacker State with Dataclasses.md>)
-4. Structured logging for exploit development
-5. A custom web server for hosting or receiving payloads
-6. Concurrency concepts using async
-7. Control flow and stage management
+3. [03 - Context Management with Dataclasses](<03 - Context Management with Dataclasses.md>)
+4. Control Flow and Stage Management
+5. Structured logging for exploit development
+6. A custom web server for hosting or receiving payloads
+7. Concurrency concepts using async
 8. A fictitious blind SQL injection example (linear vs binary and async variants)
 
 By the end of this series, you should have a reusable PoC skeleton that you can adapt to each lab or exam target with minimal rewrites.
