@@ -268,4 +268,4 @@ Because from_args is defined as a `@classmethod`, it receives the class itself (
 
 This structure is not a template you must copy verbatim. The goal is to demonstrate a pattern that scales as exploits grow, not to prescribe a fixed schema.
 
-In the next article, we’ll focus on structuring exploit execution itself by introducing explicit stages and control flow that operate over the shared context so the PoC is well-organized and maintainable.
+In the [next article](<04 - Control Flow and Stage Management.md>), we’ll focus on structuring exploit execution itself by introducing explicit stages and control flow that operate over the shared context so the PoC is well-organized and maintainable.
