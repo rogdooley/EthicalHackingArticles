@@ -1,7 +1,7 @@
 ---
 title: 06 - One-Shot Web Servers for Payload Delivery and Callbacks
-description: |
-  A practical look at building minimal, disposable web servers inside OSWE proof-of-concepts.
+description: |-
+  A practical look at building minimal, disposable web servers inside OSWE PoC scripts.
   This article covers one-shot HTTP servers for payload delivery, blind callbacks, and data
   exfiltration, focusing on simplicity, control, and stage-level integration rather than
   full infrastructure.
@@ -13,8 +13,6 @@ topics:
   - one-shot web servers
   - payload delivery
   - blind callbacks
-  - xss
-  - ssrf
   - poc tooling
 prerequisites:
   - argparse
