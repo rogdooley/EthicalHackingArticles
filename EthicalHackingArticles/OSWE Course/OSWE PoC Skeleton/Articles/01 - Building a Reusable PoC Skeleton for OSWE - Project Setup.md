@@ -165,7 +165,7 @@ This article establishes the foundation for the PoC skeleton. Each subsequent pa
 3. [Context Management with Dataclasses](<03 - Context Management with Dataclasses.md>)
 4. [Control Flow and Stage Management](<04 - Control Flow and Stage Management.md>)
 5. [Structured Logging for Exploit Development](<05 - Structured Logging for Exploit Development.md>)
-6. [One-Shot Web Servers for Payload Delivery and Callbacks](<06 - One-Shot Web Servers for Payload Delivery and Callbacks.md)
+6. [One-Shot Web Servers for Payload Delivery and Callbacks](<06 - One-Shot Web Servers for Payload Delivery and Callbacks.md>)
 7. Asynchronous Execution for Request-Heavy Exploit Stages
 8. A fictitious blind SQL injection example (linear vs binary and async variants)
 
