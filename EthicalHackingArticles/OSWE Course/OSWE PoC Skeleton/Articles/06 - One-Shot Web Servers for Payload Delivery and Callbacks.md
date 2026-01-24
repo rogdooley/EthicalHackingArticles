@@ -28,7 +28,7 @@ next: 07 - Asynchronous Execution for Request-Heavy Exploit Stages
 ---
 
 
-Over the next three articles, I want to introduce some tooling that I found genuinely helpful throughout the labs.> Each tool or concept reduced friction during exploit development, either by simplifying the PoC or by speeding up execution. This isn't about infrastructure building, but optimizing and automating processes. 
+Over the next three articles, I want to walk through a few patterns and techniques that I found genuinely helpful throughout the labs. Each tool or concept reduced friction during exploit development, either by simplifying the PoC or by speeding up execution. This isn't about infrastructure building, but optimizing and automating processes. 
 
 As a starting point, let's look at the exam requirements. When running a PoC, you are allowed to initiate listeners and a web server prior to executing the exploit code ([Exam Requirements](https://help.offsec.com/hc/en-us/articles/360046869951-WEB-300-Advanced-Web-Attacks-and-Exploitation-OSWE-Exam-Guide#section-1-exam-requirements)). Let's focus on the web server initiation. There are a myriad of web servers to choose from: Apache, Python, etc... For most, the simplest option is executing `python3 -m http.server` which serves HTTP traffic over port 8000 by default.
 
