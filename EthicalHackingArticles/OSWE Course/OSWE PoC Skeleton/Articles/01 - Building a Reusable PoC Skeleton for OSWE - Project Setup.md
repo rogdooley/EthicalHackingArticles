@@ -166,7 +166,7 @@ This article establishes the foundation for the PoC skeleton. Each subsequent pa
 4. [Control Flow and Stage Management](<04 - Control Flow and Stage Management.md>)
 5. [Structured Logging for Exploit Development](<05 - Structured Logging for Exploit Development.md>)
 6. [One-Shot Web Servers for Payload Delivery and Callbacks](<06 - One-Shot Web Servers for Payload Delivery and Callbacks.md>)
-7. Asynchronous Execution for Request-Heavy Exploit Stages
+7. [Asynchronous Execution for Request-Heavy Exploit Stages](<07 - Asynchronous Execution for Request-Heavy Exploit Stages.md>)
 8. A fictitious blind SQL injection example (linear vs binary and async variants)
 
 By the end of this series, you should have a reusable PoC skeleton that you can adapt to each lab or exam target with minimal rewrites.

@@ -259,4 +259,4 @@ However, not every stage of an exploit has that shape.
 
 Some stages are not about waiting for a single request, but about making hundreds or thousands of them: brute-forcing tokens, extracting secrets character by character, or probing timing-based side channels. In those cases, the bottleneck is no longer logic or setup, but time.
 
- In the next article, we’ll shift focus away from infrastructure and look at asynchronous execution as a tool for accelerating request-heavy stages. Async isn’t a replacement for the patterns we’ve built so far. It’s an optimization applied selectively, when a stage demands it.
+ In the [next article](<07 – Asynchronous Execution for Request-Heavy Exploit Stages.md>), we’ll shift focus away from infrastructure and look at asynchronous execution as a tool for accelerating request-heavy stages. Async isn’t a replacement for the patterns we’ve built so far. It’s an optimization applied selectively, when a stage demands it.
