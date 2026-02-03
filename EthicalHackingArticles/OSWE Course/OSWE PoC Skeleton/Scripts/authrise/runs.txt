@@ -1,0 +1,544 @@
+Target IP: 192.168.1.30
+Target Port: 9000
+Concurrency: 5
+Runs: 10
+
+--- Concurrency 5 ---
+
+--- Run 1/10 ---
+[+] Linear: 43.6225s → http://192.168.1.30:9000/probe?candidate=2140
+[+] Async:  12.5030s → http://192.168.1.30:9000/probe?candidate=2140
+
+--- Run 2/10 ---
+[+] Linear: 56.3574s → http://192.168.1.30:9000/probe?candidate=2755
+[+] Async:  17.1905s → http://192.168.1.30:9000/probe?candidate=2755
+
+--- Run 3/10 ---
+[+] Linear: 70.0903s → http://192.168.1.30:9000/probe?candidate=3431
+[+] Async:  22.3668s → http://192.168.1.30:9000/probe?candidate=3431
+
+--- Run 4/10 ---
+[+] Linear: 31.7816s → http://192.168.1.30:9000/probe?candidate=1507
+[+] Async:  8.9772s → http://192.168.1.30:9000/probe?candidate=1507
+
+--- Run 5/10 ---
+[+] Linear: 70.0429s → http://192.168.1.30:9000/probe?candidate=3205
+[+] Async:  21.2015s → http://192.168.1.30:9000/probe?candidate=3205
+
+--- Run 6/10 ---
+[+] Linear: 101.9704s → http://192.168.1.30:9000/probe?candidate=4619
+[+] Async:  30.6403s → http://192.168.1.30:9000/probe?candidate=4619
+
+--- Run 7/10 ---
+[+] Linear: 71.1313s → http://192.168.1.30:9000/probe?candidate=3253
+[+] Async:  21.5203s → http://192.168.1.30:9000/probe?candidate=3253
+
+--- Run 8/10 ---
+[+] Linear: 21.7939s → http://192.168.1.30:9000/probe?candidate=0919
+[+] Async:  7.3436s → http://192.168.1.30:9000/probe?candidate=0919
+
+--- Run 9/10 ---
+[+] Linear: 95.1334s → http://192.168.1.30:9000/probe?candidate=4079
+[+] Async:  43.9945s → http://192.168.1.30:9000/probe?candidate=4079
+
+--- Run 10/10 ---
+[+] Linear: 80.0850s → http://192.168.1.30:9000/probe?candidate=3117
+[+] Async:  20.6680s → http://192.168.1.30:9000/probe?candidate=3117
+
+Linear results over 10 runs:
+  min: 21.7939s
+  max: 101.9704s
+  avg: 64.2009s
+
+Async results over 10 runs:
+  min: 7.3436s
+  max: 43.9945s
+  avg: 20.6406s
+
+Overall speedup: 3.11×
+
+--- Concurrency 10 ---
+
+--- Run 1/10 ---
+[+] Linear: 65.6471s → http://192.168.1.30:9000/probe?candidate=2874
+[+] Async:  14.1517s → http://192.168.1.30:9000/probe?candidate=2874
+
+--- Run 2/10 ---
+[+] Linear: 48.2849s → http://192.168.1.30:9000/probe?candidate=2090
+[+] Async:  11.3672s → http://192.168.1.30:9000/probe?candidate=2090
+
+--- Run 3/10 ---
+[+] Linear: 39.1719s → http://192.168.1.30:9000/probe?candidate=1664
+[+] Async:  9.5950s → http://192.168.1.30:9000/probe?candidate=1664
+
+--- Run 4/10 ---
+[+] Linear: 82.8534s → http://192.168.1.30:9000/probe?candidate=3654
+[+] Async:  18.7062s → http://192.168.1.30:9000/probe?candidate=3654
+
+--- Run 5/10 ---
+[+] Linear: 55.9272s → http://192.168.1.30:9000/probe?candidate=2379
+[+] Async:  12.6401s → http://192.168.1.30:9000/probe?candidate=2379
+
+--- Run 6/10 ---
+[+] Linear: 26.2221s → http://192.168.1.30:9000/probe?candidate=1131
+[+] Async:  6.5506s → http://192.168.1.30:9000/probe?candidate=1131
+
+--- Run 7/10 ---
+[+] Linear: 23.6498s → http://192.168.1.30:9000/probe?candidate=0998
+[+] Async:  5.4284s → http://192.168.1.30:9000/probe?candidate=0998
+
+--- Run 8/10 ---
+[+] Linear: 15.0889s → http://192.168.1.30:9000/probe?candidate=0642
+[+] Async:  3.4580s → http://192.168.1.30:9000/probe?candidate=0642
+
+--- Run 9/10 ---
+[+] Linear: 72.9885s → http://192.168.1.30:9000/probe?candidate=3359
+[+] Async:  16.8030s → http://192.168.1.30:9000/probe?candidate=3359
+
+--- Run 10/10 ---
+[+] Linear: 53.9287s → http://192.168.1.30:9000/probe?candidate=2469
+[+] Async:  12.9478s → http://192.168.1.30:9000/probe?candidate=2469
+
+Linear results over 10 runs:
+  min: 15.0889s
+  max: 82.8534s
+  avg: 48.3763s
+
+Async results over 10 runs:
+  min: 3.4580s
+  max: 18.7062s
+  avg: 11.1648s
+
+Overall speedup: 4.33×
+
+--- Concurrency 15 ---
+
+--- Run 1/10 ---
+[+] Linear: 37.4701s → http://192.168.1.30:9000/probe?candidate=1782
+[+] Async:  9.0619s → http://192.168.1.30:9000/probe?candidate=1782
+
+--- Run 2/10 ---
+[+] Linear: 59.7289s → http://192.168.1.30:9000/probe?candidate=2777
+[+] Async:  14.2715s → http://192.168.1.30:9000/probe?candidate=2777
+
+--- Run 3/10 ---
+[+] Linear: 30.8826s → http://192.168.1.30:9000/probe?candidate=1467
+[+] Async:  7.3122s → http://192.168.1.30:9000/probe?candidate=1467
+
+--- Run 4/10 ---
+[+] Linear: 73.9621s → http://192.168.1.30:9000/probe?candidate=3488
+[+] Async:  18.7984s → http://192.168.1.30:9000/probe?candidate=3488
+
+--- Run 5/10 ---
+[+] Linear: 30.9033s → http://192.168.1.30:9000/probe?candidate=1433
+[+] Async:  8.2540s → http://192.168.1.30:9000/probe?candidate=1433
+
+--- Run 6/10 ---
+[+] Linear: 77.1826s → http://192.168.1.30:9000/probe?candidate=3417
+[+] Async:  17.1207s → http://192.168.1.30:9000/probe?candidate=3417
+
+--- Run 7/10 ---
+[+] Linear: 33.6371s → http://192.168.1.30:9000/probe?candidate=1492
+[+] Async:  8.5478s → http://192.168.1.30:9000/probe?candidate=1492
+
+--- Run 8/10 ---
+[+] Linear: 91.4604s → http://192.168.1.30:9000/probe?candidate=4093
+[+] Async:  20.9061s → http://192.168.1.30:9000/probe?candidate=4093
+
+--- Run 9/10 ---
+[+] Linear: 71.8852s → http://192.168.1.30:9000/probe?candidate=3094
+[+] Async:  15.5487s → http://192.168.1.30:9000/probe?candidate=3094
+
+--- Run 10/10 ---
+[+] Linear: 87.0473s → http://192.168.1.30:9000/probe?candidate=3965
+[+] Async:  20.8889s → http://192.168.1.30:9000/probe?candidate=3965
+
+Linear results over 10 runs:
+  min: 30.8826s
+  max: 91.4604s
+  avg: 59.4160s
+
+Async results over 10 runs:
+  min: 7.3122s
+  max: 20.9061s
+  avg: 14.0710s
+
+Overall speedup: 4.22×
+
+--- Concurrency 20 ---
+
+--- Run 1/10 ---
+[+] Linear: 19.6843s → http://192.168.1.30:9000/probe?candidate=0872
+[+] Async:  5.0264s → http://192.168.1.30:9000/probe?candidate=0872
+
+--- Run 2/10 ---
+[+] Linear: 60.8791s → http://192.168.1.30:9000/probe?candidate=2848
+[+] Async:  14.5603s → http://192.168.1.30:9000/probe?candidate=2848
+
+--- Run 3/10 ---
+[+] Linear: 13.3535s → http://192.168.1.30:9000/probe?candidate=0571
+[+] Async:  3.3887s → http://192.168.1.30:9000/probe?candidate=0571
+
+--- Run 4/10 ---
+[+] Linear: 84.0524s → http://192.168.1.30:9000/probe?candidate=3783
+[+] Async:  19.2039s → http://192.168.1.30:9000/probe?candidate=3783
+
+--- Run 5/10 ---
+[+] Linear: 56.3556s → http://192.168.1.30:9000/probe?candidate=2371
+[+] Async:  13.2049s → http://192.168.1.30:9000/probe?candidate=2371
+
+--- Run 6/10 ---
+[+] Linear: 54.4570s → http://192.168.1.30:9000/probe?candidate=2536
+[+] Async:  12.8630s → http://192.168.1.30:9000/probe?candidate=2536
+
+--- Run 7/10 ---
+[+] Linear: 67.4830s → http://192.168.1.30:9000/probe?candidate=3102
+[+] Async:  16.8075s → http://192.168.1.30:9000/probe?candidate=3102
+
+--- Run 8/10 ---
+[+] Linear: 101.9358s → http://192.168.1.30:9000/probe?candidate=4576
+[+] Async:  24.9359s → http://192.168.1.30:9000/probe?candidate=4576
+
+--- Run 9/10 ---
+[+] Linear: 110.2906s → http://192.168.1.30:9000/probe?candidate=4820
+[+] Async:  25.1519s → http://192.168.1.30:9000/probe?candidate=4820
+
+--- Run 10/10 ---
+[+] Linear: 99.6836s → http://192.168.1.30:9000/probe?candidate=4515
+[+] Async:  23.5279s → http://192.168.1.30:9000/probe?candidate=4515
+
+Linear results over 10 runs:
+  min: 13.3535s
+  max: 110.2906s
+  avg: 66.8175s
+
+Async results over 10 runs:
+  min: 3.3887s
+  max: 25.1519s
+  avg: 15.8670s
+
+Overall speedup: 4.21×
+
+--- Concurrency 25 ---
+
+--- Run 1/10 ---
+[+] Linear: 108.6624s → http://192.168.1.30:9000/probe?candidate=4750
+[+] Async:  24.6706s → http://192.168.1.30:9000/probe?candidate=4750
+
+--- Run 2/10 ---
+[+] Linear: 25.1893s → http://192.168.1.30:9000/probe?candidate=1160
+[+] Async:  5.8508s → http://192.168.1.30:9000/probe?candidate=1160
+
+--- Run 3/10 ---
+[+] Linear: 31.0752s → http://192.168.1.30:9000/probe?candidate=1454
+[+] Async:  7.3344s → http://192.168.1.30:9000/probe?candidate=1454
+
+--- Run 4/10 ---
+[+] Linear: 42.5651s → http://192.168.1.30:9000/probe?candidate=1924
+[+] Async:  10.9492s → http://192.168.1.30:9000/probe?candidate=1924
+
+--- Run 5/10 ---
+[+] Linear: 83.0054s → http://192.168.1.30:9000/probe?candidate=3754
+[+] Async:  18.9007s → http://192.168.1.30:9000/probe?candidate=3754
+
+--- Run 6/10 ---
+[+] Linear: 80.6688s → http://192.168.1.30:9000/probe?candidate=3727
+[+] Async:  18.9770s → http://192.168.1.30:9000/probe?candidate=3727
+
+--- Run 7/10 ---
+[+] Linear: 17.0897s → http://192.168.1.30:9000/probe?candidate=0725
+[+] Async:  3.7318s → http://192.168.1.30:9000/probe?candidate=0725
+
+--- Run 8/10 ---
+[+] Linear: 29.3543s → http://192.168.1.30:9000/probe?candidate=1345
+[+] Async:  6.8778s → http://192.168.1.30:9000/probe?candidate=1345
+
+--- Run 9/10 ---
+[+] Linear: 33.2070s → http://192.168.1.30:9000/probe?candidate=1540
+[+] Async:  7.6145s → http://192.168.1.30:9000/probe?candidate=1540
+
+--- Run 10/10 ---
+[+] Linear: 66.6985s → http://192.168.1.30:9000/probe?candidate=3017
+[+] Async:  14.8773s → http://192.168.1.30:9000/probe?candidate=3017
+
+Linear results over 10 runs:
+  min: 17.0897s
+  max: 108.6624s
+  avg: 51.7516s
+
+Async results over 10 runs:
+  min: 3.7318s
+  max: 24.6706s
+  avg: 11.9784s
+
+Overall speedup: 4.32×
+
+--- Concurrency 30 ---
+
+--- Run 1/10 ---
+[+] Linear: 17.3146s → http://192.168.1.30:9000/probe?candidate=0777
+[+] Async:  3.9003s → http://192.168.1.30:9000/probe?candidate=0777
+
+--- Run 2/10 ---
+[+] Linear: 18.6641s → http://192.168.1.30:9000/probe?candidate=0852
+[+] Async:  4.5229s → http://192.168.1.30:9000/probe?candidate=0852
+
+--- Run 3/10 ---
+[+] Linear: 52.2657s → http://192.168.1.30:9000/probe?candidate=2104
+[+] Async:  11.0864s → http://192.168.1.30:9000/probe?candidate=2104
+
+--- Run 4/10 ---
+[+] Linear: 96.7675s → http://192.168.1.30:9000/probe?candidate=4526
+[+] Async:  23.5843s → http://192.168.1.30:9000/probe?candidate=4526
+
+--- Run 5/10 ---
+[+] Linear: 2.1280s → http://192.168.1.30:9000/probe?candidate=0093
+[+] Async:  0.6588s → http://192.168.1.30:9000/probe?candidate=0093
+
+--- Run 6/10 ---
+[+] Linear: 79.1802s → http://192.168.1.30:9000/probe?candidate=3636
+[+] Async:  20.5223s → http://192.168.1.30:9000/probe?candidate=3636
+
+--- Run 7/10 ---
+[+] Linear: 20.2977s → http://192.168.1.30:9000/probe?candidate=0937
+[+] Async:  5.3831s → http://192.168.1.30:9000/probe?candidate=0937
+
+--- Run 8/10 ---
+[+] Linear: 47.6350s → http://192.168.1.30:9000/probe?candidate=2206
+[+] Async:  11.4567s → http://192.168.1.30:9000/probe?candidate=2206
+
+--- Run 9/10 ---
+[+] Linear: 73.4945s → http://192.168.1.30:9000/probe?candidate=3418
+[+] Async:  18.3946s → http://192.168.1.30:9000/probe?candidate=3418
+
+--- Run 10/10 ---
+[+] Linear: 18.7596s → http://192.168.1.30:9000/probe?candidate=0895
+[+] Async:  4.7616s → http://192.168.1.30:9000/probe?candidate=0895
+
+Linear results over 10 runs:
+  min: 2.1280s
+  max: 96.7675s
+  avg: 42.6507s
+
+Async results over 10 runs:
+  min: 0.6588s
+  max: 23.5843s
+  avg: 10.4271s
+
+Overall speedup: 4.09×
+
+--- Concurrency 35 ---
+
+--- Run 1/10 ---
+[+] Linear: 56.6127s → http://192.168.1.30:9000/probe?candidate=2616
+[+] Async:  12.8492s → http://192.168.1.30:9000/probe?candidate=2616
+
+--- Run 2/10 ---
+[+] Linear: 107.7549s → http://192.168.1.30:9000/probe?candidate=4738
+[+] Async:  22.5400s → http://192.168.1.30:9000/probe?candidate=4738
+
+--- Run 3/10 ---
+[+] Linear: 84.4742s → http://192.168.1.30:9000/probe?candidate=3960
+[+] Async:  19.0746s → http://192.168.1.30:9000/probe?candidate=3960
+
+--- Run 4/10 ---
+[+] Linear: 21.6498s → http://192.168.1.30:9000/probe?candidate=1013
+[+] Async:  5.8498s → http://192.168.1.30:9000/probe?candidate=1013
+
+--- Run 5/10 ---
+[+] Linear: 29.3457s → http://192.168.1.30:9000/probe?candidate=1353
+[+] Async:  7.5632s → http://192.168.1.30:9000/probe?candidate=1353
+
+--- Run 6/10 ---
+[+] Linear: 59.5205s → http://192.168.1.30:9000/probe?candidate=2718
+[+] Async:  14.9982s → http://192.168.1.30:9000/probe?candidate=2718
+
+--- Run 7/10 ---
+[+] Linear: 1.0018s → http://192.168.1.30:9000/probe?candidate=0044
+[+] Async:  0.3663s → http://192.168.1.30:9000/probe?candidate=0044
+
+--- Run 8/10 ---
+[+] Linear: 88.1350s → http://192.168.1.30:9000/probe?candidate=4146
+[+] Async:  20.4856s → http://192.168.1.30:9000/probe?candidate=4146
+
+--- Run 9/10 ---
+[+] Linear: 58.2091s → http://192.168.1.30:9000/probe?candidate=2688
+[+] Async:  14.2581s → http://192.168.1.30:9000/probe?candidate=2688
+
+--- Run 10/10 ---
+[+] Linear: 0.3650s → http://192.168.1.30:9000/probe?candidate=0009
+[+] Async:  0.1036s → http://192.168.1.30:9000/probe?candidate=0009
+
+Linear results over 10 runs:
+  min: 0.3650s
+  max: 107.7549s
+  avg: 50.7069s
+
+Async results over 10 runs:
+  min: 0.1036s
+  max: 22.5400s
+  avg: 11.8089s
+
+Overall speedup: 4.29×
+
+--- Concurrency 40 ---
+
+--- Run 1/10 ---
+[+] Linear: 101.1979s → http://192.168.1.30:9000/probe?candidate=4772
+[+] Async:  24.0349s → http://192.168.1.30:9000/probe?candidate=4772
+
+--- Run 2/10 ---
+[+] Linear: 81.5996s → http://192.168.1.30:9000/probe?candidate=3981
+[+] Async:  20.6161s → http://192.168.1.30:9000/probe?candidate=3981
+
+--- Run 3/10 ---
+[+] Linear: 51.9397s → http://192.168.1.30:9000/probe?candidate=2476
+[+] Async:  12.7211s → http://192.168.1.30:9000/probe?candidate=2476
+
+--- Run 4/10 ---
+[+] Linear: 73.6555s → http://192.168.1.30:9000/probe?candidate=3617
+[+] Async:  19.5707s → http://192.168.1.30:9000/probe?candidate=3617
+
+--- Run 5/10 ---
+[+] Linear: 58.5255s → http://192.168.1.30:9000/probe?candidate=2879
+[+] Async:  14.8966s → http://192.168.1.30:9000/probe?candidate=2879
+
+--- Run 6/10 ---
+[+] Linear: 68.7904s → http://192.168.1.30:9000/probe?candidate=3298
+[+] Async:  17.4638s → http://192.168.1.30:9000/probe?candidate=3298
+
+--- Run 7/10 ---
+[+] Linear: 20.3773s → http://192.168.1.30:9000/probe?candidate=1020
+[+] Async:  5.9286s → http://192.168.1.30:9000/probe?candidate=1020
+
+--- Run 8/10 ---
+[+] Linear: 81.6909s → http://192.168.1.30:9000/probe?candidate=3976
+[+] Async:  19.6562s → http://192.168.1.30:9000/probe?candidate=3976
+
+--- Run 9/10 ---
+[+] Linear: 32.5910s → http://192.168.1.30:9000/probe?candidate=1486
+[+] Async:  7.4177s → http://192.168.1.30:9000/probe?candidate=1486
+
+--- Run 10/10 ---
+[+] Linear: 87.1835s → http://192.168.1.30:9000/probe?candidate=4287
+[+] Async:  21.7401s → http://192.168.1.30:9000/probe?candidate=4287
+
+Linear results over 10 runs:
+  min: 20.3773s
+  max: 101.1979s
+  avg: 65.7551s
+
+Async results over 10 runs:
+  min: 5.9286s
+  max: 24.0349s
+  avg: 16.4046s
+
+Overall speedup: 4.01×
+
+--- Concurrency 45 ---
+
+--- Run 1/10 ---
+[+] Linear: 58.0733s → http://192.168.1.30:9000/probe?candidate=2817
+[+] Async:  13.8260s → http://192.168.1.30:9000/probe?candidate=2817
+
+--- Run 2/10 ---
+[+] Linear: 57.2713s → http://192.168.1.30:9000/probe?candidate=2793
+[+] Async:  14.4376s → http://192.168.1.30:9000/probe?candidate=2793
+
+--- Run 3/10 ---
+[+] Linear: 36.2357s → http://192.168.1.30:9000/probe?candidate=1743
+[+] Async:  8.8026s → http://192.168.1.30:9000/probe?candidate=1743
+
+--- Run 4/10 ---
+[+] Linear: 5.1842s → http://192.168.1.30:9000/probe?candidate=0238
+[+] Async:  1.5062s → http://192.168.1.30:9000/probe?candidate=0238
+
+--- Run 5/10 ---
+[+] Linear: 72.2311s → http://192.168.1.30:9000/probe?candidate=3433
+[+] Async:  17.5056s → http://192.168.1.30:9000/probe?candidate=3433
+
+--- Run 6/10 ---
+[+] Linear: 31.9359s → http://192.168.1.30:9000/probe?candidate=1157
+[+] Async:  6.6222s → http://192.168.1.30:9000/probe?candidate=1157
+
+--- Run 7/10 ---
+[+] Linear: 1.6237s → http://192.168.1.30:9000/probe?candidate=0048
+[+] Async:  0.3910s → http://192.168.1.30:9000/probe?candidate=0048
+
+--- Run 8/10 ---
+[+] Linear: 48.1167s → http://192.168.1.30:9000/probe?candidate=2136
+[+] Async:  10.8881s → http://192.168.1.30:9000/probe?candidate=2136
+
+--- Run 9/10 ---
+[+] Linear: 31.5726s → http://192.168.1.30:9000/probe?candidate=1618
+[+] Async:  7.7316s → http://192.168.1.30:9000/probe?candidate=1618
+
+--- Run 10/10 ---
+[+] Linear: 41.0909s → http://192.168.1.30:9000/probe?candidate=2000
+[+] Async:  10.3010s → http://192.168.1.30:9000/probe?candidate=2000
+
+Linear results over 10 runs:
+  min: 1.6237s
+  max: 72.2311s
+  avg: 38.3335s
+
+Async results over 10 runs:
+  min: 0.3910s
+  max: 17.5056s
+  avg: 9.2012s
+
+Overall speedup: 4.17×
+
+--- Concurrency 50 ---
+
+--- Run 1/10 ---
+[+] Linear: 8.8059s → http://192.168.1.30:9000/probe?candidate=0416
+[+] Async:  2.4657s → http://192.168.1.30:9000/probe?candidate=0416
+
+--- Run 2/10 ---
+[+] Linear: 47.8086s → http://192.168.1.30:9000/probe?candidate=2341
+[+] Async:  12.3379s → http://192.168.1.30:9000/probe?candidate=2341
+
+--- Run 3/10 ---
+[+] Linear: 13.7741s → http://192.168.1.30:9000/probe?candidate=0694
+[+] Async:  4.1209s → http://192.168.1.30:9000/probe?candidate=0694
+
+--- Run 4/10 ---
+[+] Linear: 25.6965s → http://192.168.1.30:9000/probe?candidate=1263
+[+] Async:  6.9259s → http://192.168.1.30:9000/probe?candidate=1263
+
+--- Run 5/10 ---
+[+] Linear: 98.0249s → http://192.168.1.30:9000/probe?candidate=4756
+[+] Async:  23.6867s → http://192.168.1.30:9000/probe?candidate=4756
+
+--- Run 6/10 ---
+[+] Linear: 46.0303s → http://192.168.1.30:9000/probe?candidate=2263
+[+] Async:  11.8698s → http://192.168.1.30:9000/probe?candidate=2263
+
+--- Run 7/10 ---
+[+] Linear: 2.0217s → http://192.168.1.30:9000/probe?candidate=0091
+[+] Async:  0.6262s → http://192.168.1.30:9000/probe?candidate=0091
+
+--- Run 8/10 ---
+[+] Linear: 45.1451s → http://192.168.1.30:9000/probe?candidate=2174
+[+] Async:  11.3099s → http://192.168.1.30:9000/probe?candidate=2174
+
+--- Run 9/10 ---
+[+] Linear: 82.0999s → http://192.168.1.30:9000/probe?candidate=3888
+[+] Async:  19.6583s → http://192.168.1.30:9000/probe?candidate=3888
+
+--- Run 10/10 ---
+[+] Linear: 97.1408s → http://192.168.1.30:9000/probe?candidate=4643
+[+] Async:  24.1773s → http://192.168.1.30:9000/probe?candidate=4643
+
+Linear results over 10 runs:
+  min: 2.0217s
+  max: 98.0249s
+  avg: 46.6548s
+
+Async results over 10 runs:
+  min: 0.6262s
+  max: 24.1773s 
+  avg: 11.7178s
+
+Overall speedup: 3.98×
