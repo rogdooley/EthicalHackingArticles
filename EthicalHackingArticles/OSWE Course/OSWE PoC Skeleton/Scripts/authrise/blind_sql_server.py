@@ -1,60 +1,101 @@
 import random
 import string
-import threading
 import time
 
 from flask import Flask, jsonify, request
 
 app = Flask(__name__)
-state_lock = threading.Lock()
 
-TOKEN_LENGTH = 16
+TOKEN_LEN = 24
+SLEEP_TIME = 3
 CHARSET = string.ascii_letters + string.digits
-SLEEP_DELAY = 0.2
+
+state = {
+    "token": None,
+    "requests": 0,
+    "completed_methods": 0,
+}
 
 
-def generate_token() -> str:
-    token = "".join(random.choice(CHARSET) for _ in range(TOKEN_LENGTH))
-    print(f"[server] new token: {token}")
-    return token
+def new_token():
+    return "".join(random.choice(CHARSET) for _ in range(TOKEN_LEN))
 
 
-current_token = generate_token()
-hit_count = 0
+@app.before_request
+def count_requests():
+    state["requests"] += 1
 
 
-@app.route("/probe", methods=["GET"])
-def probe():
+@app.route("/vuln", methods=["POST"])
+def vuln():
     """
-    Timing oracle:
-      /probe?pos=3&char=a
-    Sleeps if token[pos] == char
+    Expects JSON:
+      {
+        "pos": 5,
+        "op": ">",
+        "value": 77
+      }
+    Simulates:
+      IF(ASCII(SUBSTRING(token, pos, 1)) > value, SLEEP(3), 0)
     """
-    pos = request.args.get("pos", type=int)
-    char = request.args.get("char", type=str)
+    data = request.json
+    pos = data["pos"]
+    op = data["op"]
+    value = data["value"]
 
-    if pos is None or char is None or len(char) != 1:
-        return "bad request", 400
+    token = state["token"]
 
-    with state_lock:
-        global current_token, hit_count
+    if pos < 1 or pos > len(token):
+        return jsonify(ok=True)
 
-        if pos < 0 or pos >= len(current_token):
-            return "out of range", 404
+    c = ord(token[pos - 1])
 
-        if current_token[pos] == char:
-            time.sleep(SLEEP_DELAY)
-            hit_count += 1
+    condition = {
+        ">": c > value,
+        "<": c < value,
+        "=": c == value,
+    }[op]
 
-            # rotate token after two full client runs
-            if hit_count >= 2 * TOKEN_LENGTH:
-                print("[server] rotation threshold reached")
-                current_token = generate_token()
-                hit_count = 0
+    if condition:
+        time.sleep(SLEEP_TIME)
 
-    return jsonify({"ok": True})
+    return jsonify(ok=True)
+
+
+@app.route("/length", methods=["POST"])
+def length():
+    """
+    IF(LENGTH(token) > value, SLEEP(3), 0)
+    """
+    value = request.json["value"]
+    if len(state["token"]) > value:
+        time.sleep(SLEEP_TIME)
+    return jsonify(ok=True)
+
+
+@app.route("/done", methods=["POST"])
+def done():
+    state["completed_methods"] += 1
+    return jsonify(ok=True)
+
+
+@app.route("/reset", methods=["POST"])
+def reset():
+    state["token"] = new_token()
+    state["requests"] = 0
+    state["completed_methods"] = 0
+    return jsonify(ok=True)
+
+
+@app.route("/stats")
+def stats():
+    return jsonify(
+        token=state["token"],
+        requests=state["requests"],
+    )
 
 
 if __name__ == "__main__":
-    # single-threaded server for correctness
-    app.run(host="0.0.0.0", port=9001, threaded=False)
+    state["token"] = new_token()
+    print("[server] token:", state["token"])
+    app.run(host="0.0.0.0", port=9001)

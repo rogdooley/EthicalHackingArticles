@@ -1,3 +1,157 @@
+
+
+
+```bash
+python3 blind_sqli_client.py --target http://192.168.1.30:9001 --concurrency 20
+[linear] pos=24 → 1vkwVCZVFck2oqFuHLxYD825
+[binary] pos=24 → 1vkwVCZVFck2oqFuHLxYD825
+[async-binary] pos=01 FOUND '1' → 1???????????????????????
+[async-binary] pos=12 FOUND '2' → 1??????????2????????????
+[async-binary] pos=06 FOUND 'C' → 1????C?????2????????????
+[async-binary] pos=08 FOUND 'V' → 1????C?V???2????????????
+[async-binary] pos=05 FOUND 'V' → 1???VC?V???2????????????
+[async-binary] pos=18 FOUND 'L' → 1???VC?V???2?????L??????
+[async-binary] pos=07 FOUND 'Z' → 1???VCZV???2?????L??????
+[async-binary] pos=23 FOUND '2' → 1???VCZV???2?????L????2?
+[async-binary] pos=17 FOUND 'H' → 1???VCZV???2????HL????2?
+[async-binary] pos=15 FOUND 'F' → 1???VCZV???2??F?HL????2?
+[async-binary] pos=09 FOUND 'F' → 1???VCZVF??2??F?HL????2?
+[async-binary] pos=20 FOUND 'Y' → 1???VCZVF??2??F?HL?Y??2?
+[async-binary] pos=21 FOUND 'D' → 1???VCZVF??2??F?HL?YD?2?
+[async-binary] pos=24 FOUND '5' → 1???VCZVF??2??F?HL?YD?25
+[async-binary] pos=11 FOUND 'k' → 1???VCZVF?k2??F?HL?YD?25
+[async-binary] pos=03 FOUND 'k' → 1?k?VCZVF?k2??F?HL?YD?25
+[async-binary] pos=13 FOUND 'o' → 1?k?VCZVF?k2o?F?HL?YD?25
+[async-binary] pos=04 FOUND 'w' → 1?kwVCZVF?k2o?F?HL?YD?25
+[async-binary] pos=10 FOUND 'c' → 1?kwVCZVFck2o?F?HL?YD?25
+[async-binary] pos=22 FOUND '8' → 1?kwVCZVFck2o?F?HL?YD825
+[async-binary] pos=19 FOUND 'x' → 1?kwVCZVFck2o?F?HLxYD825
+[async-binary] pos=16 FOUND 'u' → 1?kwVCZVFck2o?FuHLxYD825
+[async-binary] pos=14 FOUND 'q' → 1?kwVCZVFck2oqFuHLxYD825
+[async-binary] pos=02 FOUND 'v' → 1vkwVCZVFck2oqFuHLxYD825
+
+
+=== Summary ===
+Linear:       95.4s | 824 requests
+Binary:       222.4s | 149 requests
+Async Binary: 18.8s | 149 requests
+Total server requests: 1123
+Token: 1vkwVCZVFck2oqFuHLxYD825
+
+```
+
+
+### Blind SQLi server implmentation
+
+```python
+import random
+import string
+import time
+
+from flask import Flask, jsonify, request
+
+app = Flask(__name__)
+
+TOKEN_LEN = 24
+SLEEP_TIME = 3
+CHARSET = string.ascii_letters + string.digits
+
+state = {
+    "token": None,
+    "requests": 0,
+    "completed_methods": 0,
+}
+
+
+def new_token():
+    return "".join(random.choice(CHARSET) for _ in range(TOKEN_LEN))
+
+
+@app.before_request
+def count_requests():
+    state["requests"] += 1
+
+
+@app.route("/vuln", methods=["POST"])
+def vuln():
+    """
+    Expects JSON:
+      {
+        "pos": 5,
+        "op": ">",
+        "value": 77
+      }
+    Simulates:
+      IF(ASCII(SUBSTRING(token, pos, 1)) > value, SLEEP(3), 0)
+    """
+    data = request.json
+    pos = data["pos"]
+    op = data["op"]
+    value = data["value"]
+
+    token = state["token"]
+
+    if pos < 1 or pos > len(token):
+        return jsonify(ok=True)
+
+    c = ord(token[pos - 1])
+
+    condition = {
+        ">": c > value,
+        "<": c < value,
+        "=": c == value,
+    }[op]
+
+    if condition:
+        time.sleep(SLEEP_TIME)
+
+    return jsonify(ok=True)
+
+
+@app.route("/length", methods=["POST"])
+def length():
+    """
+    IF(LENGTH(token) > value, SLEEP(3), 0)
+    """
+    value = request.json["value"]
+    if len(state["token"]) > value:
+        time.sleep(SLEEP_TIME)
+    return jsonify(ok=True)
+
+
+@app.route("/done", methods=["POST"])
+def done():
+    state["completed_methods"] += 1
+    return jsonify(ok=True)
+
+
+@app.route("/reset", methods=["POST"])
+def reset():
+    state["token"] = new_token()
+    state["requests"] = 0
+    state["completed_methods"] = 0
+    return jsonify(ok=True)
+
+
+@app.route("/stats")
+def stats():
+    return jsonify(
+        token=state["token"],
+        requests=state["requests"],
+    )
+
+
+if __name__ == "__main__":
+    state["token"] = new_token()
+    print("[server] token:", state["token"])
+    app.run(host="0.0.0.0", port=9001)
+
+```
+
+
+### Blind SQLi client implementation
+
+```python
 #!/usr/bin/env python3
 import argparse
 import asyncio
@@ -218,3 +372,5 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+
+```
